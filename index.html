@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبكة ماينكرافت العربية | Minecraft Community Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mc: {
+                            green: '#55FF55',
+                            darkgreen: '#00AA00',
+                            gold: '#FFAA00',
+                            aqua: '#55FFFF',
+                            red: '#FF5555',
+                            purple: '#AA00AA',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            accent: '#22c55e'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism effects */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22c55e;
+        }
+
+        /* Neon Glow Effects */
+        .glow-green {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.25);
+        }
+        .glow-green:hover {
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.45);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#0b0f19] text-slate-100">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="switchPage('home')">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-green-600 to-emerald-400 p-0.5 shadow-lg flex items-center justify-center glow-green">
+                        <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+                            <i class="fa-solid fa-cube text-2xl text-green-400"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-wide text-gradient">ماينكرافت هَب</span>
+                        <span class="block text-xs text-slate-400 font-semibold">منصة الملحقات المجتمعية المفتوحة</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden xl:flex items-center space-x-1 space-x-reverse">
+                    <button onclick="switchPage('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-house text-green-400"></i> الرئيسية
+                    </button>
+                    <button onclick="switchPage('mods')" id="nav-mods" class="nav-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-puzzle-piece text-amber-400"></i> المودات
+                    </button>
+                    <button onclick="switchPage('resources')" id="nav-resources" class="nav-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-paint-brush text-cyan-400"></i> الريسورس باكس
+                    </button>
+                    <button onclick="switchPage('maps')" id="nav-maps" class="nav-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-map-location-dot text-emerald-400"></i> الخرائط
+                    </button>
+                    <button onclick="switchPage('schematics')" id="nav-schematics" class="nav-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-drafting-compass text-purple-400"></i> المخططات
+                    </button>
+                    <button onclick="switchPage('skripts')" id="nav-skripts" class="nav-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-code text-rose-400"></i> السكربتات
+                    </button>
+                    <button onclick="switchPage('servers')" id="nav-servers" class="nav-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-server text-blue-400"></i> السيرفرات والباك آب
+                    </button>
+                </nav>
+
+                <!-- Actions: Upload & Recent Downloads -->
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <button onclick="toggleDownloadDrawer()" class="relative p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 transition border border-slate-700/50" title="التحميلات المحفوظة">
+                        <i class="fa-solid fa-download text-lg text-green-400"></i>
+                        <span id="download-count" class="absolute -top-1 -right-1 bg-green-500 text-slate-950 font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="switchPage('upload')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-slate-950 font-black text-sm flex items-center gap-2 shadow-lg glow-green transition active:scale-95">
+                        <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                        <span>رفع ملف جديد</span>
+                    </button>
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="xl:hidden p-2.5 rounded-xl bg-slate-800 text-slate-300">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-slate-900/95 border-b border-slate-800 px-4 pt-2 pb-6 space-y-2">
+            <button onclick="switchPage('home'); toggleMobileMenu()" class="w-full text-right px-4 py-2.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800 flex items-center gap-3"><i class="fa-solid fa-house text-green-400"></i> الرئيسية</button>
+            <button onclick="switchPage('mods'); toggleMobileMenu()" class="w-full text-right px-4 py-2.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800 flex items-center gap-3"><i class="fa-solid fa-puzzle-piece text-amber-400"></i> المودات (.jar)</button>
+            <button onclick="switchPage('resources'); toggleMobileMenu()" class="w-full text-right px-4 py-2.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800 flex items-center gap-3"><i class="fa-solid fa-paint-brush text-cyan-400"></i> الريسورس باكس (.rar, .zip)</button>
+            <button onclick="switchPage('maps'); toggleMobileMenu()" class="w-full text-right px-4 py-2.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800 flex items-center gap-3"><i class="fa-solid fa-map-location-dot text-emerald-400"></i> الخرائط (.rar, .zip)</button>
+            <button onclick="switchPage('schematics'); toggleMobileMenu()" class="w-full text-right px-4 py-2.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800 flex items-center gap-3"><i class="fa-solid fa-drafting-compass text-purple-400"></i> المخططات (.schem, .schematic)</button>
+            <button onclick="switchPage('skripts'); toggleMobileMenu()" class="w-full text-right px-4 py-2.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800 flex items-center gap-3"><i class="fa-solid fa-code text-rose-400"></i> السكربتات (.sk, .txt)</button>
+            <button onclick="switchPage('servers'); toggleMobileMenu()" class="w-full text-right px-4 py-2.5 rounded-lg text-sm font-bold text-slate-200 hover:bg-slate-800 flex items-center gap-3"><i class="fa-solid fa-server text-blue-400"></i> السيرفرات والباك آب (.rar, .zip)</button>
+        </div>
+    </header>
+
+    <!-- Saved Downloaded Files Side Drawer -->
+    <div id="download-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity" onclick="toggleDownloadDrawer()">
+        <div class="fixed top-0 bottom-0 left-0 w-full max-w-md bg-slate-900 border-r border-slate-800 p-6 shadow-2xl flex flex-col justify-between" onclick="event.stopPropagation()">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-green-400 text-xl"></i>
+                        <h3 class="text-lg font-bold text-white">التحميلات المحفوظة محلياً</h3>
+                    </div>
+                    <button onclick="toggleDownloadDrawer()" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <p class="text-xs text-slate-400 mt-2">جميع الملفات التي تقوم بتحميلها يتم تسجيلها هنا للوصول السريع إليها دائماً.</p>
+
+                <!-- List of downloaded items -->
+                <div id="my-downloads-list" class="mt-4 space-y-3 max-h-[70vh] overflow-y-auto pr-1">
+                    <!-- Dynamic Items -->
+                </div>
+            </div>
+            <div class="pt-4 border-t border-slate-800 text-center">
+                <span class="text-xs text-slate-500">تقنية التخزين المحلي IndexedDB جاهزة وحاضرة</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Search Bar Section (Global) -->
+        <div class="mb-8">
+            <div class="relative max-w-2xl mx-auto">
+                <input type="text" id="search-input" oninput="handleSearch()" placeholder="ابحث في الملفات المرفوعة بالاسم أو الوصف..." 
+                       class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl py-4 pr-12 pl-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
+            </div>
+        </div>
+
+        <!-- HOME PAGE -->
+        <div id="page-home" class="page-content space-y-10">
+            <!-- Hero Banner -->
+            <div class="relative rounded-3xl overflow-hidden glass-panel p-8 md:p-12 border border-slate-700/50 flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-br from-slate-900 via-slate-900/90 to-green-950/40">
+                <div class="space-y-4 max-w-xl text-center md:text-right">
+                    <span class="inline-block px-3 py-1 bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-extrabold rounded-full">
+                        🌐 منصة مشاركة ملفات ماينكرافت المفتوحة للجميع
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-black text-white leading-tight">
+                        شارك وارفـع ملفات <span class="text-gradient">ماينكرافت</span> الخاصة بك!
+                    </h1>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                        منصة مجتمعية بدون أي حسابات. يمكنك رفع الباك آب، السكربتات، المودات، والمخططات الضخمة حتى أكثر من <strong class="text-green-400">2GB</strong> مجاناً وبقائها متاحة للجميع.
+                    </p>
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+                        <button onclick="switchPage('upload')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-slate-950 font-black hover:scale-105 transition shadow-lg glow-green flex items-center gap-2">
+                            <i class="fa-solid fa-upload"></i> ارفع ملفك الأول الآن
+                        </button>
+                    </div>
+                </div>
+                <div class="relative flex-shrink-0">
+                    <div class="w-48 h-48 md:w-64 md:h-64 rounded-3xl bg-gradient-to-tr from-green-500/20 to-emerald-500/10 border border-green-500/30 flex items-center justify-center shadow-2xl relative overflow-hidden group">
+                        <i class="fa-solid fa-cubes text-7xl text-green-400 group-hover:scale-110 transition duration-500"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Grid Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div onclick="switchPage('mods')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-amber-500/50 hover:bg-slate-800/80 cursor-pointer transition text-center group">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-2xl mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">المودات</h3>
+                    <span class="text-xs text-slate-400">.jar</span>
+                </div>
+                <div onclick="switchPage('resources')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-800/80 cursor-pointer transition text-center group">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-2xl mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-paint-brush"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">الريسورس باكس</h3>
+                    <span class="text-xs text-slate-400">.rar / .zip</span>
+                </div>
+                <div onclick="switchPage('maps')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800/80 cursor-pointer transition text-center group">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-2xl mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">الخرائط والعوالم</h3>
+                    <span class="text-xs text-slate-400">.rar / .zip</span>
+                </div>
+                <div onclick="switchPage('schematics')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-purple-500/50 hover:bg-slate-800/80 cursor-pointer transition text-center group">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 text-2xl mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-drafting-compass"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">المخططات</h3>
+                    <span class="text-xs text-slate-400">.schem</span>
+                </div>
+                <div onclick="switchPage('skripts')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-rose-500/50 hover:bg-slate-800/80 cursor-pointer transition text-center group">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400 text-2xl mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">السكربتات</h3>
+                    <span class="text-xs text-slate-400">.sk / .txt</span>
+                </div>
+                <div onclick="switchPage('servers')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-blue-500/50 hover:bg-slate-800/80 cursor-pointer transition text-center group">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-2xl mb-3 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base">سيرفرات وبك أب</h3>
+                    <span class="text-xs text-slate-400">.rar / .zip</span>
+                </div>
+            </div>
+
+            <!-- Community Content Display -->
+            <div>
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-green-400"></i> الملفات المرفوعة مؤخراً من المجتمع
+                    </h2>
+                </div>
+                <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic Items Loaded via Real User Uploads Only -->
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY PAGE -->
+        <div id="page-category" class="page-content hidden space-y-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+                <div class="flex items-center gap-4">
+                    <div id="category-icon-box" class="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-400 text-2xl border border-green-500/20">
+                        <i id="category-icon" class="fa-solid fa-box"></i>
+                    </div>
+                    <div>
+                        <h1 id="category-title" class="text-2xl font-black text-white">عنوان القسم</h1>
+                        <p id="category-desc" class="text-sm text-slate-400">وصف القسم والصيغ المسموح بها.</p>
+                    </div>
+                </div>
+                <button onclick="switchPage('upload')" class="px-5 py-2.5 rounded-xl bg-green-500 text-slate-950 font-bold hover:bg-green-400 transition text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> رفع ملف هنا
+                </button>
+            </div>
+
+            <div id="category-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Items Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- UPLOAD PAGE -->
+        <div id="page-upload" class="page-content hidden max-w-3xl mx-auto space-y-6">
+            <div class="glass-panel p-8 rounded-3xl border border-slate-800 shadow-2xl">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-black text-white mb-2">رفع ملف جديد لمجتمع ماينكرافت</h1>
+                    <p class="text-slate-400 text-sm">ارفع المودات، السكربتات، الباك آب والمخططات بحجم يمتد لأكثر من 2GB مجاناً وسيتاح للجميع فوراً</p>
+                </div>
+
+                <form id="upload-form" onsubmit="handleFileUpload(event)" class="space-y-6">
+                    <!-- Title -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-300 mb-2">اسم الملف / المشروع *</label>
+                        <input type="text" id="upload-title" required placeholder="أدخل اسماً واضحاً لمشروعك..." 
+                               class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-green-500 transition">
+                    </div>
+
+                    <!-- Category Selection -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-300 mb-2">القسم *</label>
+                        <select id="upload-category" onchange="updateExtensionNotice()" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-green-500 transition">
+                            <option value="mods">مودات (Mods) - ملفات .jar</option>
+                            <option value="resources">حزم الموارد (Resource Packs) - ملفات .rar, .zip</option>
+                            <option value="maps">العوالم والخرائط (Maps) - ملفات .rar, .zip</option>
+                            <option value="schematics">المخططات (Schematics) - ملفات .schem, .schematic</option>
+                            <option value="skripts">السكربتات (Skripts) - ملفات .sk, .txt</option>
+                            <option value="servers">سيرفرات وباك آب (Servers) - ملفات .rar, .zip</option>
+                        </select>
+                        <p id="extension-notice" class="text-xs text-amber-400 mt-2 font-semibold">الصيغ المسموح بها لهذا القسم: .jar</p>
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-300 mb-2">وصف الملف والشرح *</label>
+                        <textarea id="upload-desc" rows="4" required placeholder="اكتب تفاصيل الملف، طريقة التركيب، الإضافات، والإصدار المتوافق..." 
+                                  class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-green-500 transition"></textarea>
+                    </div>
+
+                    <!-- File Zone Drag & Drop -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-300 mb-2">اختر الملف أو اسحبه هنا *</label>
+                        <div id="drop-zone" onclick="document.getElementById('file-input').click()" 
+                             class="border-2 border-dashed border-slate-700 hover:border-green-500 bg-slate-950/50 rounded-2xl p-8 text-center cursor-pointer transition group">
+                            <i class="fa-solid fa-cloud-arrow-up text-4xl text-slate-500 group-hover:text-green-400 group-hover:scale-110 transition mb-3"></i>
+                            <p class="text-sm font-bold text-slate-300 group-hover:text-green-400">اضغط لاختيار الملف من جهازك أو اسحبه وإسقطه هنا</p>
+                            <p class="text-xs text-slate-500 mt-1">يدعم التخزين المحلي التلقائي حتى للملفات الكبيرة أكثر من 2GB</p>
+                            <p id="selected-file-name" class="mt-4 text-sm font-bold text-green-400 hidden bg-green-500/10 py-2 px-4 rounded-lg inline-block border border-green-500/30"></p>
+                        </div>
+                        <input type="file" id="file-input" onchange="handleFileSelect(this)" class="hidden">
+                    </div>
+
+                    <!-- Upload Progress -->
+                    <div id="upload-progress-container" class="hidden space-y-2">
+                        <div class="flex justify-between text-xs font-bold text-slate-300">
+                            <span>جاري معالجة وحفظ الملف في ذاكرة المنصة...</span>
+                            <span id="upload-percentage">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-3 overflow-hidden border border-slate-800">
+                            <div id="upload-progress-bar" class="bg-gradient-to-r from-green-500 to-emerald-400 h-full w-0 transition-all duration-200"></div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submit-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-slate-950 font-black text-lg transition shadow-xl glow-green">
+                        <i class="fa-solid fa-check-circle"></i> نشر وحفظ الملف فوراً
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Code Viewer Modal for Skripts -->
+        <div id="code-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+            <div class="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+                <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-code text-rose-400 text-xl"></i>
+                        <h3 id="modal-code-title" class="font-bold text-white text-lg">معاينة السكربت</h3>
+                    </div>
+                    <button onclick="closeCodeModal()" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="p-6 overflow-y-auto bg-[#0a0e17] font-mono text-sm text-green-300 leading-relaxed dir-ltr text-left" id="modal-code-content">
+                    <!-- Script Text Inserted Here -->
+                </div>
+                <div class="p-4 border-t border-slate-800 bg-slate-950 flex justify-end gap-3">
+                    <button onclick="copyCodeText()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-copy"></i> نسخ الكود
+                    </button>
+                    <button onclick="closeCodeModal()" class="px-5 py-2.5 rounded-xl bg-green-500 text-slate-950 font-bold text-sm hover:bg-green-400 transition">
+                        إغلاق
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="alert-box" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-md bg-slate-900 border border-slate-700 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
+            <div id="alert-icon" class="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0"></div>
+            <div>
+                <h4 id="alert-title" class="font-bold text-white text-sm"></h4>
+                <p id="alert-msg" class="text-xs text-slate-300 mt-0.5"></p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-slate-800 bg-slate-950/80 py-10">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+            <div class="flex items-center justify-center gap-3">
+                <i class="fa-solid fa-cube text-green-400 text-2xl"></i>
+                <span class="text-xl font-black text-white">شبكة ماينكرافت العربية</span>
+            </div>
+            <p class="text-slate-500 text-sm max-w-lg mx-auto">
+                منصة مفتوحة ومستقلة تتيح لجميع صناع المحتوى واللاعبين رفع وتبادل الملحقات، المودات، والسكربتات مجاناً بدعم الملفات الكبيرة.
+            </p>
+            <p class="text-xs text-slate-600">جميع الحقوق محفوظة &copy; 2026 - Minecraft Hub Community</p>
+        </div>
+    </footer>
+
+    <script>
+        /* Pure IndexedDB Database Logic for handling user files up to > 2GB (NO DEMO DATA) */
+        const DB_NAME = 'MinecraftHubDB';
+        const DB_VERSION = 1;
+        const STORE_FILES = 'files';
+        const STORE_DOWNLOADS = 'my_downloads';
+
+        let db = null;
+        let selectedFileBlob = null;
+        let currentCategory = 'home';
+
+        // Allowed Extensions Map
+        const ALLOWED_EXTENSIONS = {
+            mods: ['.jar'],
+            resources: ['.rar', '.zip'],
+            maps: ['.rar', '.zip'],
+            schematics: ['.schem', '.schematic'],
+            skripts: ['.sk', '.txt'],
+            servers: ['.rar', '.zip']
+        };
+
+        // Category Metadata
+        const CATEGORY_META = {
+            mods: { title: 'قسم المودات (Mods)', icon: 'fa-puzzle-piece', desc: 'مودات ماينكرافت بصيغة (.jar)', color: 'amber' },
+            resources: { title: 'حزم الموارد (Resource Packs)', icon: 'fa-paint-brush', desc: 'ريسورس باكس وتكستشر باكس (.rar, .zip)', color: 'cyan' },
+            maps: { title: 'العوالم والخرائط (Maps)', icon: 'fa-map-location-dot', desc: 'خرائط مغامرات وسرفايفل وبناء (.rar, .zip)', color: 'emerald' },
+            schematics: { title: 'المخططات (Schematics)', icon: 'fa-drafting-compass', desc: 'تصاميم ومباني جاهزة WorldEdit / Litematica (.schem, .schematic)', color: 'purple' },
+            skripts: { title: 'السكربتات (Skripts)', icon: 'fa-code', desc: 'سكربتات برمجية لسيرفرات البكت والسبايجوت (.sk, .txt)', color: 'rose' },
+            servers: { title: 'سيرفرات وباك آب (Servers & Backups)', icon: 'fa-server', desc: 'نسخ احتياطية كاملة وسيرفرات جديدة (.rar, .zip)', color: 'blue' }
+        };
+
+        // Initialize IndexedDB
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onupgradeneeded = (e) => {
+                    const database = e.target.result;
+                    if (!database.objectStoreNames.contains(STORE_FILES)) {
+                        database.createObjectStore(STORE_FILES, { keyPath: 'id' });
+                    }
+                    if (!database.objectStoreNames.contains(STORE_DOWNLOADS)) {
+                        database.createObjectStore(STORE_DOWNLOADS, { keyPath: 'id' });
+                    }
+                };
+
+                request.onsuccess = (e) => {
+                    db = e.target.result;
+                    resolve(db);
+                };
+
+                request.onerror = (e) => {
+                    console.error('IndexedDB Error:', e);
+                    reject(e);
+                };
+            });
+        }
+
+        // Navigation Logic
+        function switchPage(pageName) {
+            currentCategory = pageName;
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+
+            // Reset active styles on Nav
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
+
+            if (pageName === 'home') {
+                document.getElementById('page-home').classList.remove('hidden');
+                document.getElementById('nav-home')?.classList.add('bg-slate-800', 'text-white');
+                renderHomeFeatured();
+            } else if (pageName === 'upload') {
+                document.getElementById('page-upload').classList.remove('hidden');
+            } else {
+                document.getElementById('page-category').classList.remove('hidden');
+                document.getElementById(`nav-${pageName}`)?.classList.add('bg-slate-800', 'text-white');
+                renderCategoryPage(pageName);
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Render Home Uploads
+        async function renderHomeFeatured() {
+            const grid = document.getElementById('featured-grid');
+            grid.innerHTML = '';
+            const files = await getAllFiles();
+
+            if (files.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16 glass-panel rounded-3xl border border-slate-800/80">
+                        <div class="w-20 h-20 mx-auto rounded-3xl bg-slate-800/60 flex items-center justify-center text-slate-500 text-3xl mb-4 border border-slate-700/50">
+                            <i class="fa-solid fa-folder-open"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">لا توجد ملفات مرفوعة في المنصة حتى الآن</h3>
+                        <p class="text-slate-400 text-sm max-w-md mx-auto mb-6">كن أول من يشارك ملحقاته، سيرفراته، أو موداته مع مجتمع ماينكرافت العربي!</p>
+                        <button onclick="switchPage('upload')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-slate-950 font-black text-sm hover:scale-105 transition shadow-lg glow-green inline-flex items-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> ارفع أول ملف الآن
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            files.forEach(file => {
+                grid.appendChild(createFileCard(file));
+            });
+        }
+
+        // Render Category Page
+        async function renderCategoryPage(categoryKey) {
+            const meta = CATEGORY_META[categoryKey];
+            if (!meta) return;
+
+            document.getElementById('category-title').textContent = meta.title;
+            document.getElementById('category-desc').textContent = meta.desc;
+            document.getElementById('category-icon').className = `fa-solid ${meta.icon}`;
+
+            const grid = document.getElementById('category-items-grid');
+            grid.innerHTML = '';
+
+            const allFiles = await getAllFiles();
+            const categoryFiles = allFiles.filter(f => f.category === categoryKey);
+
+            if (categoryFiles.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16 glass-panel rounded-3xl border border-slate-800/80">
+                        <div class="w-20 h-20 mx-auto rounded-3xl bg-slate-800/60 flex items-center justify-center text-slate-500 text-3xl mb-4 border border-slate-700/50">
+                            <i class="fa-solid fa-folder-plus"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">هذا القسم فارغ حالياً</h3>
+                        <p class="text-slate-400 text-sm max-w-md mx-auto mb-6">لم يقم أحد برفع أي ملفات في ${meta.title} بعد. كن الصانع الأول وابدأ الرفع!</p>
+                        <button onclick="switchPage('upload')" class="px-6 py-3 rounded-xl bg-green-500 text-slate-950 font-black text-sm hover:bg-green-400 transition inline-flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> إضافة ملف لهذا القسم
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            categoryFiles.forEach(file => {
+                grid.appendChild(createFileCard(file));
+            });
+        }
+
+        // Build File HTML Card
+        function createFileCard(file) {
+            const card = document.createElement('div');
+            card.className = 'glass-panel p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition flex flex-col justify-between space-y-4';
+            
+            const meta = CATEGORY_META[file.category] || { icon: 'fa-file', color: 'green' };
+
+            let actionButtons = `
+                <button onclick="downloadFile('${file.id}')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-slate-950 font-black text-sm flex items-center justify-center gap-2 transition shadow-md">
+                    <i class="fa-solid fa-download"></i> تحميل الملف (${file.fileSize})
+                </button>
+            `;
+
+            // If it's a script, add Code Viewer button
+            if (file.category === 'skripts' && file.codeText) {
+                actionButtons = `
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="viewCode('${file.id}')" class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-rose-400 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+                            <i class="fa-solid fa-code"></i> معاينة الكود
+                        </button>
+                        <button onclick="downloadFile('${file.id}')" class="py-2.5 rounded-xl bg-green-500 hover:bg-green-400 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 transition">
+                            <i class="fa-solid fa-download"></i> تحميل
+                        </button>
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex items-start justify-between gap-2">
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-bold border border-slate-700 flex items-center gap-1.5">
+                            <i class="fa-solid ${meta.icon}"></i> ${file.category.toUpperCase()}
+                        </span>
+                        <span class="text-[11px] text-slate-500"><i class="fa-solid fa-calendar-alt"></i> ${file.uploadDate}</span>
+                    </div>
+                    <h3 class="font-bold text-white text-lg leading-snug line-clamp-2">${escapeHtml(file.title)}</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed line-clamp-3">${escapeHtml(file.desc)}</p>
+                </div>
+                
+                <div class="pt-3 border-t border-slate-800/80 space-y-3">
+                    <div class="flex items-center justify-between text-xs text-slate-500 font-semibold">
+                        <span><i class="fa-solid fa-file-arrow-down text-green-400"></i> ${file.downloads || 0} تحميل</span>
+                        <span><i class="fa-solid fa-hard-drive text-slate-400"></i> ${file.fileSize}</span>
+                    </div>
+                    ${actionButtons}
+                </div>
+            `;
+            return card;
+        }
+
+        // Dropzone & Drag-Drop Handling
+        const dropZone = document.getElementById('drop-zone');
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone?.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-green-500', 'bg-slate-900');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone?.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-green-500', 'bg-slate-900');
+            }, false);
+        });
+
+        dropZone?.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processSelectedFile(files[0]);
+            }
+        });
+
+        function handleFileSelect(input) {
+            if (input.files.length > 0) {
+                processSelectedFile(input.files[0]);
+            }
+        }
+
+        function processSelectedFile(file) {
+            selectedFileBlob = file;
+            const nameEl = document.getElementById('selected-file-name');
+            nameEl.textContent = `تم اختيار: ${file.name} (${formatBytes(file.size)})`;
+            nameEl.classList.remove('hidden');
+        }
+
+        function updateExtensionNotice() {
+            const category = document.getElementById('upload-category').value;
+            const allowed = ALLOWED_EXTENSIONS[category].join(', ');
+            document.getElementById('extension-notice').textContent = `الصيغ المسموح بها لهذا القسم: ${allowed}`;
+        }
+
+        // Handle File Upload Form Submission
+        async function handleFileUpload(event) {
+            event.preventDefault();
+
+            if (!selectedFileBlob) {
+                showAlert('خطأ', 'يرجى اختيار ملف أولاً قبل المتابعة', 'error');
+                return;
+            }
+
+            const title = document.getElementById('upload-title').value;
+            const category = document.getElementById('upload-category').value;
+            const desc = document.getElementById('upload-desc').value;
+            const allowedExts = ALLOWED_EXTENSIONS[category];
+
+            const fileName = selectedFileBlob.name.toLowerCase();
+            const isValidExt = allowedExts.some(ext => fileName.endsWith(ext));
+
+            if (!isValidExt) {
+                showAlert('صيغة غير مسموح بها', `القسم المختص يقبل فقط الملفات بالامتدادات: ${allowedExts.join(', ')}`, 'error');
+                return;
+            }
+
+            // Show progress bar
+            const progressContainer = document.getElementById('upload-progress-container');
+            const progressBar = document.getElementById('upload-progress-bar');
+            const progressPercentage = document.getElementById('upload-percentage');
+            const submitBtn = document.getElementById('submit-btn');
+
+            progressContainer.classList.remove('hidden');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50');
+
+            // Progress simulation for user feedback
+            for (let percent = 0; percent <= 100; percent += 20) {
+                progressBar.style.width = `${percent}%`;
+                progressPercentage.textContent = `${percent}%`;
+                await new Promise(res => setTimeout(res, 80));
+            }
+
+            // Read text if skript
+            let codeText = '';
+            if (category === 'skripts') {
+                try {
+                    codeText = await selectedFileBlob.text();
+                } catch(e) {
+                    codeText = '# تعذر قراءة النص تلقائياً';
+                }
+            }
+
+            const newFile = {
+                id: 'file-' + Date.now(),
+                title: title,
+                category: category,
+                desc: desc,
+                fileName: selectedFileBlob.name,
+                fileSize: formatBytes(selectedFileBlob.size),
+                uploadDate: new Date().toISOString().split('T')[0],
+                downloads: 0,
+                codeText: codeText,
+                fileData: selectedFileBlob
+            };
+
+            // Save into IndexedDB Public Catalog
+            const tx = db.transaction(STORE_FILES, 'readwrite');
+            const store = tx.objectStore(STORE_FILES);
+            store.put(newFile);
+
+            tx.oncomplete = () => {
+                showAlert('تم الرفع بنجاح', 'تم حفظ ملفك في المنصة بشكل دائم وتوفيره للجميع!', 'success');
+                document.getElementById('upload-form').reset();
+                selectedFileBlob = null;
+                document.getElementById('selected-file-name').classList.add('hidden');
+                progressContainer.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50');
+
+                setTimeout(() => switchPage(category), 1000);
+            };
+
+            tx.onerror = () => {
+                showAlert('خطأ في التخزين', 'حدثت مشكلة أثناء حفظ الملف في القاعدة المحلية', 'error');
+                progressContainer.classList.add('hidden');
+                submitBtn.disabled = false;
+            };
+        }
+
+        // Download File & Store into User Downloads Drawer
+        async function downloadFile(fileId) {
+            const file = await getFileById(fileId);
+            if (!file) return;
+
+            // Increment download counter
+            file.downloads = (file.downloads || 0) + 1;
+            const tx = db.transaction(STORE_FILES, 'readwrite');
+            tx.objectStore(STORE_FILES).put(file);
+
+            // Save to User's Download History Store
+            const txDown = db.transaction(STORE_DOWNLOADS, 'readwrite');
+            txDown.objectStore(STORE_DOWNLOADS).put({
+                id: file.id,
+                title: file.title,
+                fileName: file.fileName,
+                downloadedAt: new Date().toLocaleTimeString('ar-EG'),
+                fileSize: file.fileSize
+            });
+
+            // Trigger Browser Download via Blob URL
+            const blobUrl = URL.createObjectURL(file.fileData);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = file.fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+
+            showAlert('جاري التحميل', `جاري تحميل ${file.fileName} وحفظه في قائمة التحميلات`, 'success');
+            updateDownloadDrawerList();
+        }
+
+        // Code Viewer Modal functions for Skripts
+        async function viewCode(fileId) {
+            const file = await getFileById(fileId);
+            if (!file || !file.codeText) return;
+
+            document.getElementById('modal-code-title').textContent = file.title;
+            document.getElementById('modal-code-content').textContent = file.codeText;
+            document.getElementById('code-modal').classList.remove('hidden');
+            document.getElementById('code-modal').classList.add('flex');
+        }
+
+        function closeCodeModal() {
+            document.getElementById('code-modal').classList.add('hidden');
+            document.getElementById('code-modal').classList.remove('flex');
+        }
+
+        function copyCodeText() {
+            const text = document.getElementById('modal-code-content').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showAlert('تم النسخ', 'تم نسخ كود السكربت إلى الحافظة بنجاح', 'success');
+            });
+        }
+
+        // Download Drawer Toggle & Update
+        function toggleDownloadDrawer() {
+            const drawer = document.getElementById('download-drawer');
+            drawer.classList.toggle('hidden');
+            if (!drawer.classList.contains('hidden')) {
+                updateDownloadDrawerList();
+            }
+        }
+
+        async function updateDownloadDrawerList() {
+            const listContainer = document.getElementById('my-downloads-list');
+            listContainer.innerHTML = '';
+
+            const tx = db.transaction(STORE_DOWNLOADS, 'readonly');
+            const store = tx.objectStore(STORE_DOWNLOADS);
+            const req = store.getAll();
+
+            req.onsuccess = () => {
+                const items = req.result;
+                document.getElementById('download-count').textContent = items.length;
+
+                if (items.length === 0) {
+                    listContainer.innerHTML = `
+                        <div class="text-center py-8 text-slate-500 text-xs">
+                            لم تقم بتحميل أي ملفات بعد.
+                        </div>
+                    `;
+                    return;
+                }
+
+                items.reverse().forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = 'p-3 bg-slate-800/80 rounded-xl border border-slate-700/60 flex items-center justify-between gap-2';
+                    el.innerHTML = `
+                        <div>
+                            <h4 class="font-bold text-white text-xs truncate max-w-[200px]">${escapeHtml(item.title)}</h4>
+                            <span class="text-[10px] text-slate-400 block">${item.fileName} - ${item.fileSize}</span>
+                        </div>
+                        <button onclick="downloadFile('${item.id}')" class="px-3 py-1.5 bg-green-500/20 text-green-400 hover:bg-green-500 hover:text-slate-950 font-bold text-xs rounded-lg transition">
+                            تحميل
+                        </button>
+                    `;
+                    listContainer.appendChild(el);
+                });
+            };
+        }
+
+        // Global Search Filter
+        async function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!query) {
+                if (currentCategory === 'home') renderHomeFeatured();
+                else renderCategoryPage(currentCategory);
+                return;
+            }
+
+            const allFiles = await getAllFiles();
+            const filtered = allFiles.filter(f => 
+                f.title.toLowerCase().includes(query) || 
+                f.desc.toLowerCase().includes(query) || 
+                f.category.toLowerCase().includes(query)
+            );
+
+            if (currentCategory === 'home') {
+                const grid = document.getElementById('featured-grid');
+                grid.innerHTML = '';
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400">لا توجد نتائج تطابق بحثك</div>`;
+                } else {
+                    filtered.forEach(f => grid.appendChild(createFileCard(f)));
+                }
+            } else {
+                const grid = document.getElementById('category-items-grid');
+                grid.innerHTML = '';
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400">لا توجد نتائج تطابق بحثك</div>`;
+                } else {
+                    filtered.forEach(f => grid.appendChild(createFileCard(f)));
+                }
+            }
+        }
+
+        // Utility Helper Functions
+        function getAllFiles() {
+            return new Promise((resolve) => {
+                const tx = db.transaction(STORE_FILES, 'readonly');
+                const store = tx.objectStore(STORE_FILES);
+                const req = store.getAll();
+                req.onsuccess = () => resolve(req.result || []);
+                req.onerror = () => resolve([]);
+            });
+        }
+
+        function getFileById(id) {
+            return new Promise((resolve) => {
+                const tx = db.transaction(STORE_FILES, 'readonly');
+                const store = tx.objectStore(STORE_FILES);
+                const req = store.get(id);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => resolve(null);
+            });
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function showAlert(title, msg, type = 'success') {
+            const alertBox = document.getElementById('alert-box');
+            const alertTitle = document.getElementById('alert-title');
+            const alertMsg = document.getElementById('alert-msg');
+            const alertIcon = document.getElementById('alert-icon');
+
+            alertTitle.textContent = title;
+            alertMsg.textContent = msg;
+
+            if (type === 'success') {
+                alertIcon.className = 'w-10 h-10 rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center text-lg';
+                alertIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else {
+                alertIcon.className = 'w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-lg';
+                alertIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            }
+
+            alertBox.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                alertBox.classList.add('translate-y-24', 'opacity-0');
+            }, 4000);
+        }
+
+        // Window Load Handler
+        window.onload = async function() {
+            try {
+                await initDB();
+                renderHomeFeatured();
+                updateDownloadDrawerList();
+                updateExtensionNotice();
+            } catch (e) {
+                console.error("Initialization Failed", e);
+            }
+        };
+    </script>
+</body>
+</html>
